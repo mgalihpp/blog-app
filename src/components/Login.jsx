@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { color } from "./Header";
+import { color } from "../config";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { authAction } from "./../store/index";
