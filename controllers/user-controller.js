@@ -59,5 +59,9 @@ export const login = async (req, res, next) =>{
     if(!isPasswordCorrect){
         return res.status(404).json({ message : "Incorrect Password"});
     }
+<<<<<<< HEAD
     return res.status(200).json({ message: "Login Successfull"})
+=======
+    return res.status(200).json({ message: "Login Successfull", users: existingUser})
+>>>>>>> 77121fa (fix user)
 }

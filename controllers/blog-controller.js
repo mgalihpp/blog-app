@@ -5,7 +5,11 @@ import mongoose from "mongoose";
 export const getAllBlogs = async (req, res, next) => {
   let blogs;
   try {
+<<<<<<< HEAD
     blogs = await BlogModel.find();
+=======
+    blogs = await BlogModel.find().populate("user");
+>>>>>>> 77121fa (fix user)
   } catch (error) {
     console.error(error);
   }
