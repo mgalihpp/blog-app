@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
   avatar: {
     type: String,
     default:
-      "https://i.pinimg.com/736x/1b/b8/c8/1bb8c82cdad7277dd52ae4d21c7ee292.jpg",
+      "https://th.bing.com/th/id/OIP.xfgwOuKzWWPqBN8Rn-pUcAHaHa?pid=ImgDet&rs=1",
     required: false,
   },
   blogs: [{ type: mongoose.Types.ObjectId, ref: "blogs", required: true }],
