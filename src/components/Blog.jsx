@@ -3,10 +3,13 @@ import axios from "axios";
 import { BASE_URL } from "./../config";
 import BlogCard from "./card/BlogCard";
 import { Typography } from "@mui/material";
+import Cookies from "js-cookie";
+import SkeletonCard from "./card/SkeletonCard";
 
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
-  const userId = localStorage.getItem("userId");
+  const [loading, setLoading] = useState(true);
+  const userId = Cookies.get("userId");
   const [fetchData, setFetchData] = useState(true);
 
   const sendRequest = async () => {
@@ -27,6 +30,7 @@ const Blog = () => {
     if (fetchData) {
       sendRequest().then((data) => {
         setBlogs(data.blogs);
+        setLoading(false);
         setFetchData(false); // Set to false after the initial fetch
       });
     }
@@ -34,7 +38,14 @@ const Blog = () => {
 
   return (
     <>
-      {blogs.length === 0 ? (
+      {loading ? (
+        <>
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+        </>
+      ) : blogs.length === 0 ? (
         <Typography variant="h4" textAlign={"center"} mt={30}>
           NO BLOG FOUND
         </Typography>
@@ -43,6 +54,7 @@ const Blog = () => {
         blogs.map((blog, index) => (
           <BlogCard
             userId={userId === blog.user._id}
+            avatar={blog.user.avatar}
             blogId={blog._id}
             userName={blog.user.name}
             title={blog.title}

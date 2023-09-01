@@ -4,15 +4,18 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import { BASE_URL } from "../config";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const STextField = styled(TextField)({
   margin: "0.5em",
+  width: '100%'
 });
 
 const AddBlog = () => {
   const theme = useTheme();
-  const userId = localStorage.getItem("userId");
+  const navigate = useNavigate()
+  const userId = Cookies.get("userId");
   const [inputs, setInputs] = useState({
     title: "",
     description: "",
@@ -30,6 +33,8 @@ const AddBlog = () => {
     e.preventDefault();
     try {
       await sendRequest();
+      alert("blog created");
+      navigate('/myblogs')
     } catch (error) {
       console.error(error);
     }
@@ -43,7 +48,7 @@ const AddBlog = () => {
         image: inputs.image,
         user: userId,
       });
-      const data = res.data;
+      const data = await res.data;
       return data;
     } catch (error) {
       console.error(error);
@@ -65,7 +70,7 @@ const AddBlog = () => {
       ) : (
         <form onSubmit={handleSubmit}>
           <Box
-            maxWidth={400}
+            maxWidth={500}
             display={"flex"}
             flexDirection={"column"}
             alignItems={"center"}
@@ -99,7 +104,6 @@ const AddBlog = () => {
               name="image"
               value={inputs.image}
               placeholder="image"
-              required
             />
             <Button
               type="submit"
