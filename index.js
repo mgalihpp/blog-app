@@ -10,8 +10,11 @@ const PORT = process.env.PORT;
 const URL = process.env.MONGOOSE_URL;
 const app = express();
 app.use(express.json());
-app.use(cors());
 app.use(cookieParser());
+app.use(cors({
+    origin: 'https://mgalihpp.github.io',
+    credentials: true,
+  }));
 
 app.use("/api/user", userRouter);
 app.use("/api/blog", blogRouter);
