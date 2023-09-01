@@ -20,12 +20,12 @@ export const addBlog = async (req, res, next) => {
 
   let existingUser;
   try {
-    existingUser = await UserModel.findById(user)
+    existingUser = await UserModel.findById(user);
   } catch (error) {
     console.error(error);
   }
-  if(!existingUser){
-    return res.status(400).json({ message: "Unable to find user by this id"})
+  if (!existingUser) {
+    return res.status(400).json({ message: "Unable to find user by this id" });
   }
 
   const newBlog = new BlogModel({
@@ -37,13 +37,13 @@ export const addBlog = async (req, res, next) => {
   try {
     const session = await mongoose.startSession();
     session.startTransaction();
-    await newBlog.save({session})
+    await newBlog.save({ session });
     existingUser.blogs.push(newBlog);
-    await existingUser.save({session});
+    await existingUser.save({ session });
     await session.commitTransaction();
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: error});
+    return res.status(500).json({ message: error });
   }
   return res.status(201).json({ newBlog });
 };
@@ -56,6 +56,7 @@ export const updateBlog = async (req, res, next) => {
     blog = await BlogModel.findByIdAndUpdate(blogId, {
       title,
       description,
+      image,
     });
   } catch (error) {
     console.error(error);
@@ -85,8 +86,10 @@ export const deleteBlog = async (req, res, next) => {
   const id = req.params.id;
   let blog;
   try {
-    blog = await BlogModel.findByIdAndRemove(id).populate('user');
-    await UserModel.findByIdAndUpdate(blog.user, { $pull: { blogs: blog._id } })
+    blog = await BlogModel.findByIdAndRemove(id).populate("user");
+    await UserModel.findByIdAndUpdate(blog.user, {
+      $pull: { blogs: blog._id },
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Unable to delete" });
@@ -95,19 +98,19 @@ export const deleteBlog = async (req, res, next) => {
     return res.status(400).json({ message: "Unable to delete" });
   }
   return res.status(200).json({ message: "Successfully deleted!" });
-}
+};
 
 export const getUserBlogById = async (req, res, next) => {
   const UserId = req.params.id;
   let userBlogs;
 
   try {
-    userBlogs = await UserModel.findById(UserId).populate('blogs');
+    userBlogs = await UserModel.findById(UserId).populate("blogs");
   } catch (error) {
     console.error(error);
   }
-  if(!userBlogs){
+  if (!userBlogs) {
     return res.status(404).json({ message: "user blog not found" });
   }
-  return res.status(200).json({users: userBlogs});
-}
+  return res.status(200).json({ users: userBlogs });
+};
