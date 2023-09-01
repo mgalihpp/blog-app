@@ -13,6 +13,9 @@ app.use(cors());
 
 app.use("/api/user", userRouter);
 app.use("/api/blog", blogRouter);
+app.get("/", async (req, res) => {
+    res.send('ok')
+})
 
 try {
     mongoose.connect(URL)
