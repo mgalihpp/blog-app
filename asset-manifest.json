@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/mgalihpp/blog-app/static/css/main.3f6f09a1.css",
-    "main.js": "/mgalihpp/blog-app/static/js/main.0067b852.js",
-    "index.html": "/mgalihpp/blog-app/index.html"
+    "main.css": "/blog-app/static/css/main.3f6f09a1.css",
+    "main.js": "/blog-app/static/js/main.0067b852.js",
+    "index.html": "/blog-app/index.html"
   },
   "entrypoints": [
     "static/css/main.3f6f09a1.css",
