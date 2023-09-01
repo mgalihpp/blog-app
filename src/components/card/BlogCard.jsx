@@ -23,6 +23,7 @@ const BlogCard = ({
   description,
   imageUrl,
   userId,
+  avatar,
   blogId,
   handle,
 }) => {
@@ -33,6 +34,7 @@ const BlogCard = ({
       const res = await axios.delete(BASE_URL + `/api/blog/delete/${blogId}`);
       const data = await res.data;
       handle();
+      alert("blog deleted");
       return data;
     } catch (error) {
       console.error(error);
@@ -71,9 +73,7 @@ const BlogCard = ({
     >
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: green[500] }} aria-label="recipe">
-            {userName.charAt(0).toUpperCase()}
-          </Avatar>
+          <Avatar src={avatar} />
         }
         action={
           showMenu && userId ? (
@@ -115,11 +115,12 @@ const BlogCard = ({
           borderRadius: 5,
         }}
         image={imageUrl}
-        alt="..."
+        alt=""
       />
       <BlogDetail
         id={blogId}
         handleOpen={showEdit}
+        handleWhileSubmit={setShowEdit}
         handleClose={handleCloseEdit}
         handle={handle}
       />

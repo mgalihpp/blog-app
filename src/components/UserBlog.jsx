@@ -4,11 +4,12 @@ import { BASE_URL } from "../config";
 import BlogCard from "./card/BlogCard";
 import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const UserBlog = () => {
   const [blogs, setBlogs] = useState([]);
-  const [userName, setUserName] = useState("");
-  const userId = localStorage.getItem("userId");
+  const [user, setUser] = useState("");
+  const userId = Cookies.get("userId");
   const [fetchData, setFetchData] = useState(true);
 
   const sendRequest = async () => {
@@ -29,7 +30,7 @@ const UserBlog = () => {
     if (fetchData)
       if (userId) {
         sendRequest().then((data) => {
-          setUserName(data.users.name);
+          setUser(data.users);
           setBlogs(data.users.blogs);
           setFetchData(false);
         });
@@ -54,10 +55,11 @@ const UserBlog = () => {
             key={blog._id}
             blogId={blog._id}
             userId={userId === blog.user}
-            userName={userName}
+            userName={user.name}
             title={blog.title}
             description={blog.description}
             imageUrl={blog.image}
+            avatar={user.avatar}
             handle={handleDataRefresh}
           />
         ))
