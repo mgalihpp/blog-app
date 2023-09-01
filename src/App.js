@@ -7,7 +7,7 @@ import UserBlog from "./components/UserBlog";
 import BlogDetail from "./components/BlogDetail";
 import AddBlog from "./components/AddBlog";
 import { darkTheme, lightTheme } from "./Theme";
-import { CssBaseline, ThemeProvider, } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -31,7 +31,7 @@ function App() {
             <Route path="/blogs" element={<Blog />} />
             <Route path="/myblogs" element={<UserBlog />} />
             <Route path="/myblogs/:id" element={<BlogDetail />} />
-            <Route path="/blog/add" element={<AddBlog />} />
+            <Route path="/blogs/add" element={<AddBlog />} />
           </Routes>
         </main>
       </React.Fragment>
