@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { authAction } from "./../store/index";
 import { BASE_URL } from "../config";
 import { useTheme } from "@emotion/react";
+import Cookies from "js-cookie";
 
 const STextField = styled(TextField)({
   margin: "0.5em",
@@ -23,6 +24,9 @@ const Login = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [signedUp, setSignedUp] = useState(false);
   const theme = useTheme();
+
+  const expirationDate = new Date();
+  expirationDate.setTime(expirationDate.getTime() + 60 * 60 * 1000); // 1 hour in milliseconds
 
   const handleChange = (e) => {
     setinputs((prevState) => ({
@@ -48,8 +52,8 @@ const Login = () => {
     } else {
       try {
         const data = await sendRequest();
-        localStorage.setItem("userId", data.users._id);
         dispath(authAction.login());
+        Cookies.set("userId", data.users._id, { expires: expirationDate });
         navigate("/");
       } catch (error) {
         console.error(error);

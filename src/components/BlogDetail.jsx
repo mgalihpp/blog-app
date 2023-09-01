@@ -1,16 +1,24 @@
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { Box, Button, Dialog, DialogTitle, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogTitle,
+  InputLabel,
+  TextField,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../config";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const STextField = styled(TextField)({
   margin: "0.5em",
   width: "100%",
 });
 
-const BlogDetail = ({ id, handleOpen, handleClose, handle }) => {
+const BlogDetail = ({ id, handleOpen, handleClose, handle, handleWhileSubmit }) => {
   const theme = useTheme();
   const blogId = id;
   const [blog, setBlog] = useState([]);
@@ -18,6 +26,12 @@ const BlogDetail = ({ id, handleOpen, handleClose, handle }) => {
     title: "",
     description: "",
     image: "",
+  });
+
+  const SInputLabel = styled(InputLabel)({
+    marginRight: "auto",
+    color: theme.palette.text.primary,
+    fontSize: '1em'
   });
 
   const fetchBlogById = async () => {
@@ -55,6 +69,7 @@ const BlogDetail = ({ id, handleOpen, handleClose, handle }) => {
     try {
       await sendRequest();
       alert("success to update blog");
+      handleWhileSubmit(false);
       handle();
     } catch (error) {
       console.error(error);
@@ -62,7 +77,7 @@ const BlogDetail = ({ id, handleOpen, handleClose, handle }) => {
   };
 
   const sendRequest = async () => {
-    const userId = localStorage.getItem("userId");
+    const userId = Cookies.get("userId");
     try {
       const res = await axios.put(BASE_URL + `/api/blog/update/${blogId}`, {
         title: inputs.title,
@@ -70,7 +85,7 @@ const BlogDetail = ({ id, handleOpen, handleClose, handle }) => {
         image: inputs.image,
         user: userId,
       });
-      const data = res.data;
+      const data = await res.data;
       return data;
     } catch (error) {
       console.error(error);
@@ -94,6 +109,7 @@ const BlogDetail = ({ id, handleOpen, handleClose, handle }) => {
             borderRadius={0}
             bgcolor={theme.palette.primary.form}
           >
+            <SInputLabel>Title :</SInputLabel>
             <STextField
               onChange={handleChange}
               name="title"
@@ -101,6 +117,7 @@ const BlogDetail = ({ id, handleOpen, handleClose, handle }) => {
               placeholder="title"
               required
             />
+            <SInputLabel>Description :</SInputLabel>
             <STextField
               onChange={handleChange}
               name="description"
@@ -108,12 +125,12 @@ const BlogDetail = ({ id, handleOpen, handleClose, handle }) => {
               placeholder="description"
               required
             />
+            <SInputLabel>Image :</SInputLabel>
             <STextField
               onChange={handleChange}
               name="image"
               value={inputs.image}
               placeholder="image"
-              required
             />
             <Button
               type="submit"

@@ -16,11 +16,13 @@ import { authAction } from "../store";
 import { Brightness4, DarkMode, Menu } from "@mui/icons-material";
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
+import Cookies from "js-cookie";
 
 const Header = ({ toggleTheme, isDarkMode }) => {
   const dispatch = useDispatch();
   const [value, setValue] = useState(0);
   const isLogged = useSelector((state) => state.isLogged);
+  const userId = Cookies.get("userId");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const location = useLocation();
@@ -74,20 +76,22 @@ const Header = ({ toggleTheme, isDarkMode }) => {
             <IconButton onClick={toggleTheme}>
               {isDarkMode ? <Brightness4 /> : <DarkMode />}
             </IconButton>
-            <Tabs
-              value={value}
-              onChange={handleTabChange}
-              TabIndicatorProps={{
-                style: {
-                  background: theme.palette.action.active,
-                  color: theme.palette.action.active,
-                },
-              }}
-            >
-              <STab component={Link} to="/" label="All Blogs" />
-              <STab component={Link} to="/myblogs" label="My Blogs" />
-              <STab component={Link} to="/blogs/add" label="Add Blogs" />
-            </Tabs>
+            {userId && (
+              <Tabs
+                value={value}
+                onChange={handleTabChange}
+                TabIndicatorProps={{
+                  style: {
+                    background: theme.palette.action.active,
+                    color: theme.palette.action.active,
+                  },
+                }}
+              >
+                <STab component={Link} to="/" label="All Blogs" />
+                <STab component={Link} to="/myblogs" label="My Blogs" />
+                <STab component={Link} to="/blogs/add" label="Add Blogs" />
+              </Tabs>
+            )}
             {!isLogged ? (
               <Button
                 component={Link}
@@ -155,21 +159,24 @@ const Header = ({ toggleTheme, isDarkMode }) => {
                   boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // Optional: Add a shadow
                 }}
               >
-                <Tabs
-                  orientation="vertical"
-                  value={value}
-                  onChange={handleTabChange}
-                  TabIndicatorProps={{
-                    style: {
-                      background: theme.palette.action.active,
-                      color: theme.palette.action.active,
-                    },
-                  }}
-                >
-                  <STab component={Link} to="/" label="All Blogs" />
-                  <STab component={Link} to="/myblogs" label="My Blogs" />
-                  <STab component={Link} to="/blog/add" label="Add Blogs" />
-                </Tabs>
+                {userId && (
+                  <Tabs
+                    orientation="vertical"
+                    value={value}
+                    onChange={handleTabChange}
+                    TabIndicatorProps={{
+                      style: {
+                        background: theme.palette.action.active,
+                        color: theme.palette.action.active,
+                      },
+                    }}
+                  >
+                    <STab component={Link} to="/" label="All Blogs" />
+
+                    <STab component={Link} to="/myblogs" label="My Blogs" />
+                    <STab component={Link} to="/blogs/add" label="Add Blogs" />
+                  </Tabs>
+                )}
                 <Box>
                   {!isLogged ? (
                     <Button

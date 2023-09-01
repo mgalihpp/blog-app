@@ -1,5 +1,5 @@
 import Header from "./components/Header";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Login from "./components/Login";
 import Blog from "./components/Blog";
@@ -8,9 +8,12 @@ import BlogDetail from "./components/BlogDetail";
 import AddBlog from "./components/AddBlog";
 import { darkTheme, lightTheme } from "./Theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
+import Cookies from "js-cookie";
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(
+    Cookies.get('theme') === 'dark' ? true : false
+  );
 
   const toggleTheme = () => {
     setIsDarkMode((prevMode) => !prevMode);
@@ -18,7 +21,10 @@ function App() {
 
   const theme = isDarkMode ? darkTheme : lightTheme;
 
-  document.body.className = isDarkMode ? "theme-dark" : "theme-light";
+  useEffect(() => {
+    Cookies.set("theme", isDarkMode ? "dark" : "light");
+  }, [isDarkMode]);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
