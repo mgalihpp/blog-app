@@ -2,11 +2,11 @@ import styled from "@emotion/styled";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { color } from "../config";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { authAction } from "./../store/index";
 import { BASE_URL } from "../config";
+import { useTheme } from "@emotion/react";
 
 const STextField = styled(TextField)({
   margin: "0.5em",
@@ -22,6 +22,7 @@ const Login = () => {
   });
   const [isSignUp, setIsSignUp] = useState(false);
   const [signedUp, setSignedUp] = useState(false);
+  const theme = useTheme();
 
   const handleChange = (e) => {
     setinputs((prevState) => ({
@@ -54,7 +55,6 @@ const Login = () => {
         console.error(error);
       }
     }
-    console.log(inputs);
   };
 
   const sendRequest = async (type = "login") => {
@@ -81,11 +81,12 @@ const Login = () => {
             flexDirection={"column"}
             alignItems={"center"}
             justifyContent={"center"}
-            boxShadow={"1px 5px 5px 5px #ccc"}
+            boxShadow={"1px 5px 5px 5px rgba(0, 0, 0, 0.1)"}
             padding={3}
             margin={"auto"}
-            marginTop={15}
+            marginTop={20}
             borderRadius={5}
+            bgcolor={theme.palette.primary.form}
           >
             <Typography variant="h3" padding={3} textAlign={"center"}>
               Login
@@ -117,14 +118,16 @@ const Login = () => {
             />
             <Button
               type="submit"
-              variant="contained"
+              variant="outlined"
               sx={{
                 borderRadius: 3,
                 marginTop: 3,
-                background: color.second,
+                border: 1,
+                borderColor: theme.palette.hover,
+                color: theme.palette.text.primary,
                 "&:hover": {
-                  background: color.hover,
-                  color: color.main,
+                  backgroundColor: theme.palette.hover,
+                  color: theme.palette.background.default,
                 },
               }}
             >
@@ -152,7 +155,7 @@ const Login = () => {
             flexDirection={"column"}
             alignItems={"center"}
             justifyContent={"center"}
-            boxShadow={"10px 10px 20px #ccc"}
+            boxShadow={`10px 10px 20px rgba(0, 0, 0, 0.1)`}
             padding={3}
             margin={"auto"}
             marginTop={5}
