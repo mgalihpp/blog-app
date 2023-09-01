@@ -2,14 +2,18 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../config";
 import BlogCard from "./card/BlogCard";
+import { Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const UserBlog = () => {
-  const [blogs, setBlogs] = useState([]); // Initialize as an empty array
-  const id = localStorage.getItem("userId");
+  const [blogs, setBlogs] = useState([]);
+  const [userName, setUserName] = useState("");
+  const userId = localStorage.getItem("userId");
+  const [fetchData, setFetchData] = useState(true);
 
   const sendRequest = async () => {
     try {
-      const res = await axios.get(BASE_URL + `/api/blog/user/${id}`);
+      const res = await axios.get(BASE_URL + `/api/blog/user/${userId}`);
       const data = await res.data;
       return data;
     } catch (error) {
@@ -17,27 +21,48 @@ const UserBlog = () => {
     }
   };
 
+  const handleDataRefresh = () => {
+    setFetchData(true);
+  };
+
   useEffect(() => {
-    sendRequest().then((data) => {
-      if (data && data.blogs) {
-        setBlogs(data.blogs);
+    if (fetchData)
+      if (userId) {
+        sendRequest().then((data) => {
+          setUserName(data.users.name);
+          setBlogs(data.users.blogs);
+          setFetchData(false);
+        });
       }
-    });
-  });
-  console.log(blogs);
+  }, [fetchData]);
 
   return (
-    <div>
-      {blogs.map((blog, index) => (
-        <BlogCard
-          userName={blog.user.name}
-          title={blog.title}
-          description={blog.description}
-          imageUrl={blog.image}
-          key={index}
-        />
-      ))}
-    </div>
+    <>
+      {userId === null ? (
+        <Typography
+          variant="h4"
+          sx={{
+            textAlign: "center",
+            mt: 30,
+          }}
+        >
+          Please <Link to="/auth">Login</Link>
+        </Typography>
+      ) : (
+        blogs.map((blog) => (
+          <BlogCard
+            key={blog._id}
+            blogId={blog._id}
+            userId={userId === blog.user}
+            userName={userName}
+            title={blog.title}
+            description={blog.description}
+            imageUrl={blog.image}
+            handle={handleDataRefresh}
+          />
+        ))
+      )}
+    </>
   );
 };
 
