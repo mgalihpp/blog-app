@@ -37,7 +37,6 @@ export const signup = async (req, res, next) => {
     name,
     email,
     password: hashPassword,
-    avatar,
     blogs: [],
   });
 
