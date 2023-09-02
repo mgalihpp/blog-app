@@ -73,7 +73,10 @@ const Header = ({ toggleTheme, isDarkMode }) => {
         {/* ... (desktop tabs and login/logout button) */}
         {!isSmallScreen && (
           <Box sx={{ marginLeft: "auto", display: "flex" }}>
-            <IconButton onClick={toggleTheme}>
+            <IconButton
+              onClick={toggleTheme}
+              aria-label="toggleLightDark_button"
+            >
               {isDarkMode ? <Brightness4 /> : <DarkMode />}
             </IconButton>
             {userId && (
@@ -94,6 +97,7 @@ const Header = ({ toggleTheme, isDarkMode }) => {
             )}
             {!isLogged ? (
               <Button
+                aria-label="login_button"
                 component={Link}
                 to="/auth"
                 variant="outlined"
@@ -112,6 +116,7 @@ const Header = ({ toggleTheme, isDarkMode }) => {
               </Button>
             ) : (
               <Button
+                aria-label="logout_button"
                 onClick={() => dispatch(authAction.logout())}
                 component={Link}
                 to="/auth"
@@ -135,10 +140,16 @@ const Header = ({ toggleTheme, isDarkMode }) => {
         {/* Mobile menu */}
         {isSmallScreen && (
           <Box sx={{ marginLeft: "auto" }}>
-            <IconButton onClick={toggleTheme}>
+            <IconButton
+              onClick={toggleTheme}
+              aria-label="toggleLightDark_button"
+            >
               {isDarkMode ? <Brightness4 /> : <DarkMode />}
             </IconButton>
-            <IconButton onClick={handleMobileMenuOpen}>
+            <IconButton
+              onClick={handleMobileMenuOpen}
+              aria-label="toggleMenu_button"
+            >
               <Menu />
             </IconButton>
             {mobileMenuOpen && (
@@ -180,6 +191,7 @@ const Header = ({ toggleTheme, isDarkMode }) => {
                 <Box>
                   {!isLogged ? (
                     <Button
+                      aria-label="login_button"
                       component={Link}
                       to="/auth"
                       variant="outlined"
@@ -198,6 +210,7 @@ const Header = ({ toggleTheme, isDarkMode }) => {
                     </Button>
                   ) : (
                     <Button
+                      aria-label="logout_button"
                       onClick={() => dispatch(authAction.logout())}
                       component={Link}
                       to="/auth"

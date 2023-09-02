@@ -73,7 +73,7 @@ const BlogCard = ({
     >
       <CardHeader
         avatar={
-          <Avatar src={avatar} />
+          <Avatar src={avatar} alt="user avatar"/>
         }
         action={
           showMenu && userId ? (
@@ -115,7 +115,7 @@ const BlogCard = ({
           borderRadius: 5,
         }}
         image={imageUrl}
-        alt=""
+        alt="user image"
       />
       <BlogDetail
         id={blogId}
