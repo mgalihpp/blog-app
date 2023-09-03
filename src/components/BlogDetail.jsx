@@ -115,7 +115,6 @@ const BlogDetail = ({ id, handleOpen, handleClose, handle, handleWhileSubmit }) 
               name="title"
               value={inputs.title}
               placeholder="title"
-              required
             />
             <SInputLabel>Description :</SInputLabel>
             <STextField
@@ -123,9 +122,8 @@ const BlogDetail = ({ id, handleOpen, handleClose, handle, handleWhileSubmit }) 
               name="description"
               value={inputs.description}
               placeholder="description"
-              required
             />
-            <SInputLabel>Image :</SInputLabel>
+            <SInputLabel>Image (URL) :</SInputLabel>
             <STextField
               onChange={handleChange}
               name="image"
