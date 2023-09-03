@@ -1,6 +1,13 @@
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  AlertTitle,
+  Box,
+  Button,
+  TextField,
+  Typography,
+} from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import { BASE_URL } from "../config";
@@ -9,18 +16,20 @@ import Cookies from "js-cookie";
 
 const STextField = styled(TextField)({
   margin: "0.5em",
-  width: '100%'
+  width: "100%",
 });
 
 const AddBlog = () => {
   const theme = useTheme();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const userId = Cookies.get("userId");
   const [inputs, setInputs] = useState({
     title: "",
     description: "",
     image: "",
   });
+
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const handleChange = (e) => {
     setInputs((prevState) => ({
@@ -33,8 +42,11 @@ const AddBlog = () => {
     e.preventDefault();
     try {
       await sendRequest();
-      alert("blog created");
-      navigate('/myblogs')
+      setIsAlertOpen(true);
+      setTimeout(() => {
+        setIsAlertOpen(false);
+        navigate("/myblogs");
+      }, 2000);
     } catch (error) {
       console.error(error);
     }
@@ -68,7 +80,7 @@ const AddBlog = () => {
           Please <Link to="/auth">Login</Link> To Create a Blog
         </Typography>
       ) : (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{ position: 'relative'}}>
           <Box
             maxWidth={500}
             display={"flex"}
@@ -78,7 +90,7 @@ const AddBlog = () => {
             boxShadow={"1px 5px 5px 5px rgba(0, 0, 0, 0.1)"}
             padding={3}
             margin={"auto"}
-            marginTop={15}
+            marginTop={10}
             borderRadius={5}
             bgcolor={theme.palette.primary.form}
           >
@@ -103,7 +115,7 @@ const AddBlog = () => {
               onChange={handleChange}
               name="image"
               value={inputs.image}
-              placeholder="image"
+              placeholder="image (optional)"
             />
             <Button
               type="submit"
@@ -123,6 +135,20 @@ const AddBlog = () => {
               Add
             </Button>
           </Box>
+          {isAlertOpen && (
+            <Alert
+              variant="filled"
+              severity="success"
+              sx={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                margin: 0,
+              }}
+            >
+              <AlertTitle>Success Add Blog</AlertTitle>
+            </Alert>
+          )}
         </form>
       )}
     </>

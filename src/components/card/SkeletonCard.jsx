@@ -1,11 +1,9 @@
 import { useTheme } from "@emotion/react";
 import {
   Card,
-  CardContent,
   CardHeader,
   CardMedia,
   Skeleton,
-  Typography,
 } from "@mui/material";
 
 const SkeletonCard = () => {

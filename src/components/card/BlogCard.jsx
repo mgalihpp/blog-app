@@ -9,7 +9,6 @@ import {
 import { IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Avatar from "@mui/material/Avatar";
-import { green } from "@mui/material/colors";
 import { useTheme } from "@emotion/react";
 import { useState } from "react";
 import { Delete, Edit } from "@mui/icons-material";
@@ -56,6 +55,12 @@ const BlogCard = ({
     setShowEdit(false);
   };
 
+  const imageHandle = (imageUrl) => {
+    if (imageUrl) {
+      return imageUrl;
+    }
+  };
+
   return (
     <Card
       sx={{
@@ -65,16 +70,13 @@ const BlogCard = ({
         border: 0.1,
         borderColor: theme.palette.action.disabled,
         boxShadow: `0px 10px 20px ${theme.palette.secondary.shadow}`,
-        cursor: "pointer",
         "@media (min-width: 768px)": {
           maxWidth: "50vw",
         },
       }}
     >
       <CardHeader
-        avatar={
-          <Avatar src={avatar} />
-        }
+        avatar={<Avatar src={avatar} alt="user avatar" />}
         action={
           showMenu && userId ? (
             <>
@@ -114,8 +116,8 @@ const BlogCard = ({
           objectFit: "fill",
           borderRadius: 5,
         }}
-        image={imageUrl}
-        alt=""
+        image={imageHandle(imageUrl)}
+        aria-hidden
       />
       <BlogDetail
         id={blogId}

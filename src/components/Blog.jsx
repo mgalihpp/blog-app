@@ -29,9 +29,10 @@ const Blog = () => {
   useEffect(() => {
     if (fetchData) {
       sendRequest().then((data) => {
-        setBlogs(data.blogs);
+        const reversedBlogs = data.blogs ? data.blogs.reverse() : [];
+        setBlogs(reversedBlogs);
         setLoading(false);
-        setFetchData(false); // Set to false after the initial fetch
+        setFetchData(false);
       });
     }
   }, [fetchData]);
