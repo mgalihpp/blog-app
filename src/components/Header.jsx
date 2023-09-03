@@ -40,6 +40,9 @@ const Header = ({ toggleTheme, isDarkMode }) => {
       case "/blogs/add":
         setValue(2);
         break;
+      case "/user/settings":
+        setValue(3);
+        break;
       default:
         setValue(0);
         break;
@@ -92,7 +95,8 @@ const Header = ({ toggleTheme, isDarkMode }) => {
               >
                 <STab component={Link} to="/" label="All Blogs" />
                 <STab component={Link} to="/myblogs" label="My Blogs" />
-                <STab component={Link} to="/blogs/add" label="Add Blogs" />
+                <STab component={Link} to="/blogs/add" label="Add Blog" />
+                <STab component={Link} to="/user/settings" label="Settings" />
               </Tabs>
             )}
             {!isLogged ? (
@@ -157,17 +161,16 @@ const Header = ({ toggleTheme, isDarkMode }) => {
                 sx={{
                   position: "absolute",
                   top: "100%",
-                  right: 0, // Align to the right
+                  right: 0,
                   display: "flex",
-                  flexDirection: "column", // Display in column layout
+                  flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
                   background: "white",
                   color: "black",
                   zIndex: 1,
                   bgcolor: theme.palette.toggle,
-                  // minWidth: "200px", // Adjust as needed
-                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // Optional: Add a shadow
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
                 }}
               >
                 {userId && (
@@ -186,6 +189,7 @@ const Header = ({ toggleTheme, isDarkMode }) => {
 
                     <STab component={Link} to="/myblogs" label="My Blogs" />
                     <STab component={Link} to="/blogs/add" label="Add Blogs" />
+                    <STab component={Link} to="/user/setting" label="Setting" />
                   </Tabs>
                 )}
                 <Box>

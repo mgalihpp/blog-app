@@ -26,7 +26,7 @@ const Login = () => {
   const theme = useTheme();
 
   const expirationDate = new Date();
-  expirationDate.setTime(expirationDate.getTime() + 60 * 60 * 1000); // 1 hour in milliseconds
+  expirationDate.setTime(expirationDate.getTime() + 60 * 60 * 1000);
 
   const handleChange = (e) => {
     setinputs((prevState) => ({
@@ -88,7 +88,7 @@ const Login = () => {
             boxShadow={"1px 5px 5px 5px rgba(0, 0, 0, 0.1)"}
             padding={3}
             margin={"auto"}
-            marginTop={20}
+            marginTop={10}
             borderRadius={5}
             bgcolor={theme.palette.primary.form}
           >
