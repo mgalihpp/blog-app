@@ -1,8 +1,5 @@
 import UserModel from "../models/User.js";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-
-const SECRET_KEY = "MAOGMOAMGGMO2PLPAAA2";
 
 export const getAllUser = async (req, res, next) => {
   let users;
@@ -15,6 +12,21 @@ export const getAllUser = async (req, res, next) => {
     return res.status(404).json({ message: "no users found" });
   }
   return res.status(200).json({ users });
+};
+
+export const getUserById = async (req, res, next) => {
+  const userId = req.params.id;
+  let user;
+
+  try {
+    user = await UserModel.findById(userId);
+  } catch (error) {
+    console.error(error);
+  }
+  if (!user) {
+    return res.status(404).json({ message: "error user not found" });
+  }
+  return res.status(200).json({ user });
 };
 
 export const signup = async (req, res, next) => {
@@ -67,12 +79,26 @@ export const login = async (req, res, next) => {
     return res.status(404).json({ message: "Incorrect Password" });
   }
 
-  const authToken = jwt.sign({ userId: existingUser._id}, SECRET_KEY);
-  res.cookie('authToken', authToken, {
-    httpOnly: true,
-  });
-
   return res
     .status(200)
     .json({ message: "Login Successfull", users: existingUser });
+};
+
+export const userEdit = async (req, res, next) => {
+  const { name, email, avatar } = req.body;
+  const userId = req.params.id;
+  let existingUser;
+  try {
+    existingUser = await UserModel.findByIdAndUpdate(userId, {
+      name,
+      email,
+      avatar,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+  if (!existingUser) {
+    return res.status(404).json({ message: "cannot find user" });
+  }
+  return res.status(200).json({ existingUser });
 };
