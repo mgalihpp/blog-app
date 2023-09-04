@@ -8,7 +8,7 @@ export const getAllBlogs = async (req, res, next) => {
     blogs = await BlogModel.find()
       .populate({
         path: "user",
-        select: "-_id name avatar",
+        select: "_id name avatar",
       })
       .select("-password")
       .exec();
