@@ -111,7 +111,7 @@ export const getUserBlogById = async (req, res, next) => {
   let userBlogs;
 
   try {
-    userBlogs = await UserModel.findById(UserId).populate("blogs");
+    userBlogs = await UserModel.findById(UserId).populate("blogs").select("-password -email");
   } catch (error) {
     console.error(error);
   }
