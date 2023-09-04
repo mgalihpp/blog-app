@@ -5,7 +5,13 @@ import mongoose from "mongoose";
 export const getAllBlogs = async (req, res, next) => {
   let blogs;
   try {
-    blogs = await BlogModel.find().populate("user");
+    blogs = await BlogModel.find()
+      .populate({
+        path: "user",
+        select: "-_id name avatar",
+      })
+      .select("-password")
+      .exec();
   } catch (error) {
     console.error(error);
   }
