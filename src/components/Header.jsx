@@ -189,7 +189,7 @@ const Header = ({ toggleTheme, isDarkMode }) => {
 
                     <STab component={Link} to="/myblogs" label="My Blogs" />
                     <STab component={Link} to="/blogs/add" label="Add Blogs" />
-                    <STab component={Link} to="/user/setting" label="Setting" />
+                    <STab component={Link} to="/user/settings" label="Setting" />
                   </Tabs>
                 )}
                 <Box>
