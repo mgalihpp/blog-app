@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../config";
-import BlogCard from "./card/BlogCard";
+import BlogCard from "../components/blog/BlogCard";
 import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";

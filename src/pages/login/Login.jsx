@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { authAction } from "./../store/index";
-import { BASE_URL } from "../config";
+import { authAction } from "../../store/index";
+import { BASE_URL } from "../../config";
 import { useTheme } from "@emotion/react";
 import Cookies from "js-cookie";
 

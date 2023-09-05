@@ -9,7 +9,7 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { BASE_URL } from "../config";
+import { BASE_URL } from "../../config";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -18,7 +18,7 @@ const STextField = styled(TextField)({
   width: "100%",
 });
 
-const BlogDetail = ({ id, handleOpen, handleClose, handle, handleWhileSubmit }) => {
+const BlogEdit = ({ id, handleOpen, handleClose, handle, handleWhileSubmit }) => {
   const theme = useTheme();
   const blogId = id;
   const [blog, setBlog] = useState([]);
@@ -154,4 +154,4 @@ const BlogDetail = ({ id, handleOpen, handleClose, handle, handleWhileSubmit }) 
   );
 };
 
-export default BlogDetail;
+export default BlogEdit;

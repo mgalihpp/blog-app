@@ -12,7 +12,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { authAction } from "../store";
+import { authAction } from "../../store";
 import { Brightness4, DarkMode, Menu } from "@mui/icons-material";
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
@@ -189,7 +189,7 @@ const Header = ({ toggleTheme, isDarkMode }) => {
 
                     <STab component={Link} to="/myblogs" label="My Blogs" />
                     <STab component={Link} to="/blogs/add" label="Add Blogs" />
-                    <STab component={Link} to="/user/setting" label="Setting" />
+                    <STab component={Link} to="/user/settings" label="Setting" />
                   </Tabs>
                 )}
                 <Box>

@@ -11,10 +11,11 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Avatar from "@mui/material/Avatar";
 import { useTheme } from "@emotion/react";
 import { useState } from "react";
-import { Delete, Edit } from "@mui/icons-material";
-import BlogDetail from "../BlogDetail";
+import { Comment, Delete, Edit } from "@mui/icons-material";
 import axios from "axios";
 import { BASE_URL } from "../../config";
+import BlogEdit from "./BlogEdit";
+import { useNavigate } from "react-router-dom";
 
 const BlogCard = ({
   userName,
@@ -27,6 +28,7 @@ const BlogCard = ({
   handle,
 }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const handleDelete = async () => {
     try {
@@ -54,6 +56,10 @@ const BlogCard = ({
   const handleCloseEdit = () => {
     setShowEdit(false);
   };
+
+  const handleComment = () => {
+    navigate(`/blogs/${blogId}`);
+  }
 
   const imageHandle = (imageUrl) => {
     if (imageUrl) {
@@ -93,9 +99,14 @@ const BlogCard = ({
               </Box>
             </>
           ) : (
-            <IconButton aria-label="settings" onClick={handleMenuClick}>
-              <MoreVertIcon />
-            </IconButton>
+            <>
+              <IconButton onClick={handleComment}>
+                <Comment />
+              </IconButton>
+              <IconButton aria-label="settings" onClick={handleMenuClick}>
+                <MoreVertIcon />
+              </IconButton>
+            </>
           )
         }
         title={userName}
@@ -119,7 +130,7 @@ const BlogCard = ({
         image={imageHandle(imageUrl)}
         aria-hidden
       />
-      <BlogDetail
+      <BlogEdit
         id={blogId}
         handleOpen={showEdit}
         handleWhileSubmit={setShowEdit}

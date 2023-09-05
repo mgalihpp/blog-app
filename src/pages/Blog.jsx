@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "./../config";
-import BlogCard from "./card/BlogCard";
+import { BASE_URL } from "../config";
+import BlogCard from "../components/blog/BlogCard";
 import { Typography } from "@mui/material";
 import Cookies from "js-cookie";
-import SkeletonCard from "./card/SkeletonCard";
+import SkeletonCard from "../components/blog/SkeletonCard";
 
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
