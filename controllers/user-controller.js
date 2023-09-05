@@ -19,7 +19,7 @@ export const getUserById = async (req, res, next) => {
   let user;
 
   try {
-    user = await UserModel.findById(userId).select("-password -email");
+    user = await UserModel.findById(userId).select("-password");
   } catch (error) {
     console.error(error);
   }

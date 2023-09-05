@@ -8,7 +8,7 @@ export const getAllBlogs = async (req, res, next) => {
     blogs = await BlogModel.find()
       .populate({
         path: "user",
-        select: "_id name avatar",
+        select: "_id name avatar comment",
       })
       .select("-password")
       .exec();
@@ -39,6 +39,7 @@ export const addBlog = async (req, res, next) => {
     description,
     image,
     user,
+    comment: [],
   });
   try {
     const session = await mongoose.startSession();
@@ -78,7 +79,20 @@ export const getById = async (req, res, next) => {
   let blog;
 
   try {
-    blog = await BlogModel.findById(id);
+    blog = await BlogModel.findById(id)
+      .populate({
+        path: "user",
+        select: "_id name avatar",
+      })
+      .populate({
+        path: "comment",
+        select: "text createdAt",
+        populate: {
+          path: "userId",
+          select: "name avatar",
+        },
+      })
+      .exec();
   } catch (error) {
     console.error(error);
   }
@@ -111,7 +125,9 @@ export const getUserBlogById = async (req, res, next) => {
   let userBlogs;
 
   try {
-    userBlogs = await UserModel.findById(UserId).populate("blogs").select("-password -email");
+    userBlogs = await UserModel.findById(UserId)
+      .populate("blogs")
+      .select("-password -email");
   } catch (error) {
     console.error(error);
   }

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 const BlogSchema = new mongoose.Schema({
     title: {
@@ -17,7 +17,12 @@ const BlogSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: "users",
         required: true,
-    }
+    },
+    comment: [{
+        type: mongoose.Types.ObjectId,
+        ref: "comments",
+        required: false
+    }]
 })
 
 const BlogModel = mongoose.model("blogs", BlogSchema);
