@@ -6,9 +6,11 @@ const lightTheme = createTheme({
     mode: "light",
     primary: {
       main: "#fff",
+      text: "#1A1A1B",
     },
     hover: "#000",
     toggle: "#ffffff",
+    textfield: "#000",
   },
 });
 const darkTheme = createTheme({
@@ -17,9 +19,11 @@ const darkTheme = createTheme({
     primary: {
       main: "#000",
       form: "#282828",
+      text: "#E4E5E4",
     },
     hover: "#fff",
     toggle: "#4a4a4a",
+    textfield: "#fff",
   },
   components: {
     MuiCssBaseline: {
